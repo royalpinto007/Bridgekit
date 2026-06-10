@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bridgekit",
+  "account_id": "a97af859ae0c177338e4df0b1d640176",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-03-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  }
+  // Secrets (set with `wrangler secret put NAME`):
+  //   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY   -> audit log + db_query tool
+  //   BRIDGEKIT_CLIENTS                          -> JSON: client keys -> scopes
+  //   SHOPIFY_STORE, SHOPIFY_ADMIN_TOKEN         -> optional, real Shopify calls
+  //   TRIPLEWHALE_API_KEY                        -> optional, real Triple Whale calls
+}

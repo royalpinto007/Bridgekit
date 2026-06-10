@@ -1,0 +1,13 @@
+# Copy to .dev.vars for local `wrangler dev`. In production use `wrangler secret put`.
+
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Client keys -> scopes. Each client gets an opaque key and a list of allowed
+# tools; "write" must be explicitly granted or every write tool is denied.
+BRIDGEKIT_CLIENTS={"bk_live_demo123":{"name":"growth-os","tools":["shopify_orders","triplewhale_metrics","db_query"],"allowWrite":false}}
+
+# Optional real connectors (without these, read tools return clearly-labelled sample data).
+SHOPIFY_STORE=your-store.myshopify.com
+SHOPIFY_ADMIN_TOKEN=
+TRIPLEWHALE_API_KEY=

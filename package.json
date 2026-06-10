@@ -1,0 +1,16 @@
+{
+  "name": "bridgekit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Scoped MCP server that exposes a company's tools (Shopify, Triple Whale, Postgres) to their AI with per-key permission boundaries and an audit log.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240909.0",
+    "typescript": "^5.5.3",
+    "wrangler": "^4.98.0"
+  }
+}
