@@ -180,7 +180,7 @@ const AI_SYSTEM =
   "audit log. Answer questions about Bridgekit and MCP concisely, 1-4 sentences.";
 
 async function aiChat(req: Request, env: Env): Promise<Response> {
-  const { prompt } = (await req.json().catch(() => ({}))) as { prompt?: string };
+  const { prompt, max } = (await req.json().catch(() => ({}))) as { prompt?: string; max?: number };
   if (!prompt) return json({ error: "prompt required" }, 400);
   if (!env.AI_GATEWAY_SECRET) return json({ error: "AI not configured" }, 503);
   try {
@@ -190,7 +190,7 @@ async function aiChat(req: Request, env: Env): Promise<Response> {
         "content-type": "application/json",
         "x-ai-secret": env.AI_GATEWAY_SECRET,
       },
-      body: JSON.stringify({ system: AI_SYSTEM, prompt: String(prompt).slice(0, 2000), max: 240 }),
+      body: JSON.stringify({ system: AI_SYSTEM, prompt: String(prompt).slice(0, 2000), max: typeof max === "number" ? max : undefined }),
     });
     const d = (await r.json()) as { reply?: string; error?: string };
     return json({ reply: d.reply || "", error: d.error });
@@ -279,14 +279,14 @@ function landingPage(): string {
   <div class="card">
     <div class="card-head">Which tool should I use? (AI)</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <input id="tgin" placeholder="Describe what you need, e.g. last week's ad ROAS" style="flex:1;min-width:200px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px"/>
+      <input id="tgin" onkeydown="if(event.key==='Enter')tsuggest()" placeholder="Describe what you need, e.g. last week ad ROAS" style="flex:1;min-width:200px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px"/>
       <button onclick="tsuggest()">Suggest</button>
     </div>
     <pre id="tgout" class="out"></pre>
   </div>
   <footer>Per-key scopes · write actions gated · every call audited · <a href="/info">/info</a></footer>
   <script>
-    async function tsuggest(){var i=document.getElementById('tgin'),o=document.getElementById('tgout');var q=i.value.trim()||"last week's blended ROAS";o.textContent='Thinking…';try{var r=await fetch('/ai',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'Bridgekit exposes these MCP tools: shopify_orders (read), triplewhale_metrics (read), db_query (read, allowlisted tables), shopify_tag_order (write). Which ONE best fits this request, and give a one-line example call? Request: '+q})});var d=await r.json();o.textContent=d.reply||('Unavailable ('+(d.error||'?')+')');}catch(e){o.textContent='Error: '+e.message;}}
+    async function tsuggest(){var i=document.getElementById('tgin'),o=document.getElementById('tgout');var q=i.value.trim()||"last week's blended ROAS";o.textContent='Thinking…';try{var r=await fetch('/ai',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'Bridgekit exposes these MCP tools: shopify_orders (read), triplewhale_metrics (read), db_query (read, allowlisted tables), shopify_tag_order (write). Which ONE best fits this request, and give a one-line example call? Request: '+q,max:160})});var d=await r.json();o.textContent=d.reply||('Unavailable ('+(d.error||'?')+')');}catch(e){o.textContent='Error: '+e.message;}}
     async function bk(method, params){
       var out=document.getElementById('out'); out.textContent='Calling '+method+' …';
       try{
