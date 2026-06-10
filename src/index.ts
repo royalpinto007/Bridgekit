@@ -246,7 +246,7 @@ function landingPage(): string {
 <style>${LANDING_CSS}</style></head>
 <body><div class="glow"></div><main>
   <header>
-    <div class="logo"><span class="mark">⇄</span> bridgekit</div>
+    <div class="logo"><span class="mark">⇄</span> Bridgekit</div>
     <span class="status"><i></i> live</span>
   </header>
   <span class="eyebrow">model context protocol</span>
@@ -276,8 +276,17 @@ function landingPage(): string {
     </div>
     <pre id="out" class="out">Click a button to call the live MCP server. The demo key is read-only, so the write attempt is denied and logged.</pre>
   </div>
+  <div class="card">
+    <div class="card-head">Which tool should I use? (AI)</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <input id="tgin" placeholder="Describe what you need, e.g. last week's ad ROAS" style="flex:1;min-width:200px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px"/>
+      <button onclick="tsuggest()">Suggest</button>
+    </div>
+    <pre id="tgout" class="out"></pre>
+  </div>
   <footer>Per-key scopes · write actions gated · every call audited · <a href="/info">/info</a></footer>
   <script>
+    async function tsuggest(){var i=document.getElementById('tgin'),o=document.getElementById('tgout');var q=i.value.trim()||"last week's blended ROAS";o.textContent='Thinking…';try{var r=await fetch('/ai',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'Bridgekit exposes these MCP tools: shopify_orders (read), triplewhale_metrics (read), db_query (read, allowlisted tables), shopify_tag_order (write). Which ONE best fits this request, and give a one-line example call? Request: '+q})});var d=await r.json();o.textContent=d.reply||('Unavailable ('+(d.error||'?')+')');}catch(e){o.textContent='Error: '+e.message;}}
     async function bk(method, params){
       var out=document.getElementById('out'); out.textContent='Calling '+method+' …';
       try{
@@ -288,7 +297,7 @@ function landingPage(): string {
   </script>
   <button class="chatbtn" onclick="document.getElementById('cbox').classList.toggle('open')">✦</button>
   <div class="chatbox" id="cbox">
-    <div class="chathead">Bridgekit assistant <span style="color:#8b8b96;font-weight:400">· llama3.2</span></div>
+    <div class="chathead">Bridgekit assistant</div>
     <div class="chatmsgs" id="cmsgs"><div class="cm a">Ask me about Bridgekit, MCP, scopes, or the audit log.</div></div>
     <form class="chatform" onsubmit="return cask(event)"><input id="cin" placeholder="Ask about Bridgekit…" autocomplete="off"/><button>Send</button></form>
   </div>
