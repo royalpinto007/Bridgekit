@@ -182,6 +182,22 @@ function html(body: string, status = 200): Response {
   });
 }
 
+const AUDIT_ROWS = [
+  ["growth-os", "triplewhale_metrics", true],
+  ["growth-os", "shopify_orders", true],
+  ["analyst-ro", "db_query · posts", true],
+  ["growth-os", "shopify_tag_order", false],
+  ["growth-os", "triplewhale_metrics", true],
+  ["analyst-ro", "db_query · users", false],
+  ["ops-bot", "shopify_orders", true],
+  ["growth-os", "db_query · tc_runs", true],
+]
+  .map(
+    ([client, tool, ok]) =>
+      `<div class="trow"><span><span class="tname">${tool}</span> <span class="tcli">· ${client}</span></span><span class="${ok ? "tok" : "tno"}">${ok ? "allowed" : "denied"}</span></div>`,
+  )
+  .join("");
+
 function landingPage(): string {
   const rows = TOOLS.map(
     (t) => `<tr>
@@ -206,13 +222,8 @@ function landingPage(): string {
   <h1>Give your AI your tools.<br>Not your API keys.</h1>
   <p class="lede">A scoped MCP server that exposes Shopify, Triple Whale, and your database to an AI stack with per-client permission boundaries, read/write separation, and an append-only audit log.</p>
   <div class="card">
-    <div class="card-head">How it works <span class="runtag"><i></i> running</span></div>
-    <div class="flow"><div class="ftrack"></div><div class="fnodes">
-      <div class="fnode"><div class="fico" style="animation-delay:0s">1</div><div class="ft">AI asks</div><div class="fd">Your agent calls a tool over MCP.</div></div>
-      <div class="fnode"><div class="fico" style="animation-delay:.7s">2</div><div class="ft">Scope check</div><div class="fd">Key matched to allowed tools and write scope.</div></div>
-      <div class="fnode"><div class="fico" style="animation-delay:1.4s">3</div><div class="ft">Tool runs</div><div class="fd">Shopify, Triple Whale or DB, one interface.</div></div>
-      <div class="fnode"><div class="fico" style="animation-delay:2.1s">4</div><div class="ft">Audited</div><div class="fd">Every call logged, allowed or denied.</div></div>
-    </div></div>
+    <div class="card-head">Live audit log <span class="runtag"><i></i> streaming</span></div>
+    <div class="ticker"><div class="ticker-inner">${AUDIT_ROWS}${AUDIT_ROWS}</div></div>
   </div>
   <div class="card">
     <div class="card-head">Exposed tools</div>
@@ -294,6 +305,14 @@ button:hover{border-color:#a855f7}
 @keyframes fpulse{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,0)}50%{box-shadow:0 0 0 6px rgba(168,85,247,.18)}}
 .ft{font-weight:600;font-size:13.5px}
 .fd{color:#8b8b96;font-size:12px;margin-top:3px;line-height:1.5}
+.ticker{height:170px;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(180deg,transparent,#000 16%,#000 84%,transparent);mask-image:linear-gradient(180deg,transparent,#000 16%,#000 84%,transparent)}
+.ticker-inner{display:flex;flex-direction:column;gap:8px;animation:tick 16s linear infinite}
+@keyframes tick{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:9px 12px;font-size:12.5px;background:rgba(255,255,255,.02)}
+.tname{font-family:ui-monospace,Menlo,monospace}
+.tcli{color:#8b8b96;font-size:11px}
+.tok{color:#3fb950;background:rgba(63,185,80,.12);border-radius:6px;padding:2px 8px;font-size:11px}
+.tno{color:#f85149;background:rgba(248,81,73,.12);border-radius:6px;padding:2px 8px;font-size:11px}
 @media (prefers-color-scheme: light){
   body{background:#fafafc;color:#12141b}
   .status,.eyebrow,.card{background:#fff;border-color:#e2e4e9}
