@@ -55,7 +55,7 @@ export const TOOLS: ToolDef[] = [
   {
     name: "shopify_tag_order",
     description:
-      "Add tags to a Shopify order. WRITE action — requires the client's write scope.",
+      "Add tags to a Shopify order. WRITE action, requires the client's write scope.",
     write: true,
     inputSchema: {
       type: "object",

@@ -17,7 +17,7 @@ scope, and every call (allowed or denied) is logged.
 | `shopify_orders` | read | recent orders |
 | `triplewhale_metrics` | read | blended ROAS, CAC, revenue, spend |
 | `db_query` | read | rows from an allowlisted Postgres table |
-| `shopify_tag_order` | **write** | tag an order — needs write scope |
+| `shopify_tag_order` | **write** | tag an order, needs write scope |
 
 Read tools return clearly-labelled sample data when upstream credentials are not
 configured, so the server is demoable without a live store.

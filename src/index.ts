@@ -192,7 +192,8 @@ function landingPage(): string {
   ).join("");
   return `<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bridgekit — scoped MCP server</title>
+<title>Bridgekit: scoped MCP server</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236e8bff'/%3E%3Cpath d='M9 13h11l-3-3m6 9H12l3 3' stroke='%2308080a' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>${LANDING_CSS}</style></head>
 <body><div class="glow"></div><main>
   <header>
@@ -243,4 +244,13 @@ td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
 pre{background:#08080a;border-radius:12px;padding:14px;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#8b8b96;line-height:1.6}
 footer{margin-top:34px;color:#8b8b96;font-size:12.5px}
 a{color:#6e8bff;text-decoration:none}
+@media (prefers-color-scheme: light){
+  body{background:#fafafc;color:#12141b}
+  .status,.eyebrow,.card{background:#fff;border-color:#e2e4e9}
+  .status,.eyebrow,.muted,.lede,footer,pre,th{color:#5f626e}
+  td{border-top-color:#eceef2}
+  .mono{color:#12141b}
+  pre{background:#f3f4f6}
+  .glow{background:radial-gradient(ellipse 70% 40% at 50% -8%,rgba(79,102,241,.10),transparent 60%)}
+}
 `;
