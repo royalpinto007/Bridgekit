@@ -1,5 +1,12 @@
 node_modules
 .wrangler
 .dev.vars
+.dev.vars.*
+!.dev.vars.example
 *.tsbuildinfo
 .DS_Store
+
+# Secrets / local env: Supabase URL + service-role key live in .dev.vars. Never push.
+.env
+.env.local
+.env*.local
