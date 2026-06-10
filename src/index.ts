@@ -214,7 +214,25 @@ function landingPage(): string {
   -H "content-type: application/json" \\
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</pre>
   </div>
+  <div class="card">
+    <div class="card-head">Try it live (demo client key)</div>
+    <div class="btns">
+      <button onclick="bk('tools/list',{})">List my tools</button>
+      <button onclick="bk('tools/call',{name:'triplewhale_metrics',arguments:{}})">Read metrics</button>
+      <button onclick="bk('tools/call',{name:'shopify_tag_order',arguments:{orderId:1001,tags:'vip'}})">Try a write</button>
+    </div>
+    <pre id="out" class="out">Click a button to call the live MCP server. The demo key is read-only, so the write attempt is denied and logged.</pre>
+  </div>
   <footer>Per-key scopes · write actions gated · every call audited · <a href="/info">/info</a></footer>
+  <script>
+    async function bk(method, params){
+      var out=document.getElementById('out'); out.textContent='Calling '+method+' …';
+      try{
+        var r=await fetch('/mcp',{method:'POST',headers:{'x-bridgekit-key':'bk_live_demo123','content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:method,params:params})});
+        out.textContent=JSON.stringify(await r.json(),null,2);
+      }catch(e){ out.textContent='Error: '+e.message; }
+    }
+  </script>
 </main></body></html>`;
 }
 
@@ -244,13 +262,18 @@ td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
 pre{background:#08080a;border-radius:12px;padding:14px;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#8b8b96;line-height:1.6}
 footer{margin-top:34px;color:#8b8b96;font-size:12.5px}
 a{color:#6e8bff;text-decoration:none}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+button{font:inherit;cursor:pointer;border:1px solid #26262e;background:#08080a;color:#ededf2;border-radius:9px;padding:8px 12px;font-size:12.5px;transition:.15s}
+button:hover{border-color:#6e8bff}
+.out{min-height:64px;white-space:pre-wrap}
 @media (prefers-color-scheme: light){
   body{background:#fafafc;color:#12141b}
   .status,.eyebrow,.card{background:#fff;border-color:#e2e4e9}
   .status,.eyebrow,.muted,.lede,footer,pre,th{color:#5f626e}
   td{border-top-color:#eceef2}
   .mono{color:#12141b}
-  pre{background:#f3f4f6}
+  pre,button{background:#f3f4f6}
+  button{color:#12141b;border-color:#e2e4e9}
   .glow{background:radial-gradient(ellipse 70% 40% at 50% -8%,rgba(79,102,241,.10),transparent 60%)}
 }
 `;
