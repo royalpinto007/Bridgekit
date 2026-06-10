@@ -17,8 +17,11 @@ export default {
   async fetch(req: Request, env: Env): Promise<Response> {
     const url = new URL(req.url);
 
-    // Health / landing.
+    // Human-facing landing (HTML); machine info at /info.
     if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
+      return html(landingPage());
+    }
+    if (req.method === "GET" && url.pathname === "/info") {
       return json({
         server: SERVER_INFO,
         protocol: PROTOCOL_VERSION,
@@ -171,3 +174,73 @@ function json(body: unknown, status = 200): Response {
     headers: { "content-type": "application/json" },
   });
 }
+
+function html(body: string, status = 200): Response {
+  return new Response(body, {
+    status,
+    headers: { "content-type": "text/html; charset=utf-8" },
+  });
+}
+
+function landingPage(): string {
+  const rows = TOOLS.map(
+    (t) => `<tr>
+      <td class="mono">${t.name}</td>
+      <td>${t.write ? '<span class="badge write">write</span>' : '<span class="badge read">read</span>'}</td>
+      <td class="muted">${t.description}</td>
+    </tr>`,
+  ).join("");
+  return `<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bridgekit — scoped MCP server</title>
+<style>${LANDING_CSS}</style></head>
+<body><div class="glow"></div><main>
+  <header>
+    <div class="logo"><span class="mark">⇄</span> bridgekit</div>
+    <span class="status"><i></i> live</span>
+  </header>
+  <span class="eyebrow">model context protocol</span>
+  <h1>Give your AI your tools.<br>Not your API keys.</h1>
+  <p class="lede">A scoped MCP server that exposes Shopify, Triple Whale, and your database to an AI stack with per-client permission boundaries, read/write separation, and an append-only audit log.</p>
+  <div class="card">
+    <div class="card-head">Exposed tools</div>
+    <table><thead><tr><th>tool</th><th>type</th><th>description</th></tr></thead><tbody>${rows}</tbody></table>
+  </div>
+  <div class="card">
+    <div class="card-head">Connect over Streamable HTTP</div>
+    <pre>curl $URL/mcp \\
+  -H "x-bridgekit-key: &lt;client-key&gt;" \\
+  -H "content-type: application/json" \\
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</pre>
+  </div>
+  <footer>Per-key scopes · write actions gated · every call audited · <a href="/info">/info</a></footer>
+</main></body></html>`;
+}
+
+const LANDING_CSS = `
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#08080a;color:#ededf2;font:15px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 40% at 50% -8%,rgba(110,139,255,.16),transparent 60%),radial-gradient(ellipse 50% 30% at 90% 0,rgba(54,214,195,.09),transparent 55%)}
+main{position:relative;max-width:760px;margin:0 auto;padding:32px 22px 60px;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px}
+.mark{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#6e8bff,#36d6c3);color:#08080a;font-weight:800}
+.status{display:inline-flex;align-items:center;gap:7px;border:1px solid #26262e;background:#111114;border-radius:999px;padding:5px 11px;font-size:11px;color:#8b8b96}
+.status i{width:7px;height:7px;border-radius:50%;background:#3fb950;box-shadow:0 0 8px #3fb950}
+.eyebrow{display:inline-block;border:1px solid #26262e;background:#111114;border-radius:999px;padding:4px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#8b8b96}
+h1{font-size:38px;line-height:1.1;letter-spacing:-.02em;margin:16px 0 14px;font-weight:650}
+.lede{color:#8b8b96;max-width:560px;font-size:16px}
+.card{border:1px solid #26262e;background:#111114;border-radius:18px;padding:18px;margin-top:26px;box-shadow:0 8px 24px -12px rgba(0,0,0,.6)}
+.card-head{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#8b8b96;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:500;color:#8b8b96;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:0 0 8px}
+td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
+.mono{font-family:ui-monospace,Menlo,monospace;color:#ededf2}
+.muted{color:#8b8b96}
+.badge{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+.badge.read{background:rgba(54,214,195,.14);color:#36d6c3}
+.badge.write{background:rgba(227,160,8,.14);color:#e3a008}
+pre{background:#08080a;border-radius:12px;padding:14px;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#8b8b96;line-height:1.6}
+footer{margin-top:34px;color:#8b8b96;font-size:12.5px}
+a{color:#6e8bff;text-decoration:none}
+`;
