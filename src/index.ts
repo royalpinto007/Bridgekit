@@ -284,7 +284,7 @@ function landingPage(): string {
     </div>
     <pre id="out" class="out">Click a button to call the live MCP server. The demo key is read-only, so the write attempt is denied and logged.</pre>
   </div>
-  <footer>Per-key scopes · write actions gated · every call audited · <a href="/info">/info</a></footer>
+  <footer>Scoped keys · gated writes · audited · <a href="/info">/info</a></footer>
   <script>
     async function tsuggest(){var i=document.getElementById('tgin'),o=document.getElementById('tgout');var q=i.value.trim()||"last week's blended ROAS";o.textContent='Thinking…';try{var r=await fetch('/ai',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'Bridgekit exposes these MCP tools: shopify_orders (read), triplewhale_metrics (read), db_query (read, allowlisted tables), shopify_tag_order (write). Which ONE best fits this request, and give a one-line example call? Request: '+q,max:160})});var d=await r.json();o.textContent=d.reply||('Unavailable ('+(d.error||'?')+')');}catch(e){o.textContent='Error: '+e.message;}}
     async function bk(method, params){
@@ -309,7 +309,7 @@ function landingPage(): string {
 
 const LANDING_CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#08080a;color:#ededf2;font:15px/1.65 'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:#08080a;color:#ededf2;font:15px/1.65 'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
 .glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 20% -8%,rgba(124,58,237,.20),transparent 60%),radial-gradient(ellipse 50% 40% at 95% 10%,rgba(168,85,247,.12),transparent 55%)}
 main{position:relative;max-width:980px;margin:0 auto;padding:32px 24px 60px;z-index:1}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px}
