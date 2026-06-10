@@ -177,12 +177,33 @@ const AI_SYSTEM =
   "You are the assistant for Bridgekit, a scoped MCP server that exposes a " +
   "company's tools (Shopify, Triple Whale, Postgres) to their AI stack with " +
   "per-client permission scopes, read/write separation, and an append-only " +
-  "audit log. Answer questions about Bridgekit and MCP concisely, 1-4 sentences.";
+  "audit log. Answer questions about Bridgekit and MCP clearly in at most two " +
+  "complete short sentences. Never prefix your answer with assistant or a role label.";
+
+function cleanAiReply(reply?: string): string {
+  return (reply ?? "")
+    .trim()
+    .replace(/^(?:assistant|ai|bot|bridgekit)\s*:\s*/i, "")
+    .trim();
+}
+
+function fixedAiReply(prompt: string): string | undefined {
+  const question = prompt.trim().toLowerCase().replace(/[?!.,]+$/, "");
+  if (/^(hi|hello|hey|hi there|hello there)$/.test(question)) {
+    return "Hi! Ask me about Bridgekit, MCP tools, permission scopes, or the audit log.";
+  }
+  if (/^(who are you|what are you|what do you do)$/.test(question)) {
+    return "I'm the Bridgekit assistant. I can explain scoped MCP tools, read and write permissions, and auditing.";
+  }
+}
 
 async function aiChat(req: Request, env: Env): Promise<Response> {
   const { prompt, max } = (await req.json().catch(() => ({}))) as { prompt?: string; max?: number };
   if (!prompt) return json({ error: "prompt required" }, 400);
+  const fixed = fixedAiReply(prompt);
+  if (fixed) return json({ reply: fixed });
   if (!env.AI_GATEWAY_SECRET) return json({ error: "AI not configured" }, 503);
+  const outputMax = Math.min(Math.max(max ?? 140, 32), 220);
   try {
     const r = await fetch("https://n8n.agentpostmortem.com/webhook/ai-gw", {
       method: "POST",
@@ -190,10 +211,10 @@ async function aiChat(req: Request, env: Env): Promise<Response> {
         "content-type": "application/json",
         "x-ai-secret": env.AI_GATEWAY_SECRET,
       },
-      body: JSON.stringify({ system: AI_SYSTEM, prompt: String(prompt).slice(0, 2000), max: typeof max === "number" ? max : undefined }),
+      body: JSON.stringify({ system: AI_SYSTEM, prompt: String(prompt).slice(0, 2000), max: outputMax }),
     });
     const d = (await r.json()) as { reply?: string; error?: string };
-    return json({ reply: d.reply || "", error: d.error });
+    return json({ reply: cleanAiReply(d.reply), error: d.error });
   } catch {
     return json({ error: "AI upstream unreachable" }, 502);
   }
