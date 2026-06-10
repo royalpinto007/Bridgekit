@@ -35,9 +35,29 @@ export async function audit(
         args: truncate(entry.args),
       }),
     });
+    // Keep the audit log bounded for the demo (newest 150 rows).
+    await prune(env, 150);
   } catch (e) {
     console.error("[bridgekit] audit log failed:", (e as Error).message);
   }
+}
+
+async function prune(env: Env, cap: number): Promise<void> {
+  const h = {
+    apikey: env.SUPABASE_SERVICE_ROLE_KEY as string,
+    authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`,
+  };
+  const r = await fetch(
+    `${env.SUPABASE_URL}/rest/v1/bk_audit?select=created_at&order=created_at.desc&offset=${cap}&limit=1`,
+    { headers: h },
+  );
+  const rows = (await r.json()) as { created_at: string }[];
+  const cutoff = rows?.[0]?.created_at;
+  if (!cutoff) return;
+  await fetch(
+    `${env.SUPABASE_URL}/rest/v1/bk_audit?created_at=lt.${encodeURIComponent(cutoff)}`,
+    { method: "DELETE", headers: { ...h, prefer: "return=minimal" } },
+  );
 }
 
 function truncate(value: unknown): unknown {
