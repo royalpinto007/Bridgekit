@@ -239,11 +239,11 @@ function landingPage(): string {
 const LANDING_CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#08080a;color:#ededf2;font:15px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-.glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 40% at 50% -8%,rgba(110,139,255,.16),transparent 60%),radial-gradient(ellipse 50% 30% at 90% 0,rgba(54,214,195,.09),transparent 55%)}
-main{position:relative;max-width:760px;margin:0 auto;padding:32px 22px 60px;z-index:1}
+.glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 20% -8%,rgba(124,58,237,.20),transparent 60%),radial-gradient(ellipse 50% 40% at 95% 10%,rgba(168,85,247,.12),transparent 55%)}
+main{position:relative;max-width:980px;margin:0 auto;padding:32px 24px 60px;z-index:1}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px}
-.mark{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#6e8bff,#36d6c3);color:#08080a;font-weight:800}
+.mark{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:800}
 .status{display:inline-flex;align-items:center;gap:7px;border:1px solid #26262e;background:#111114;border-radius:999px;padding:5px 11px;font-size:11px;color:#8b8b96}
 .status i{width:7px;height:7px;border-radius:50%;background:#3fb950;box-shadow:0 0 8px #3fb950}
 .eyebrow{display:inline-block;border:1px solid #26262e;background:#111114;border-radius:999px;padding:4px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#8b8b96}
@@ -261,10 +261,10 @@ td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
 .badge.write{background:rgba(227,160,8,.14);color:#e3a008}
 pre{background:#08080a;border-radius:12px;padding:14px;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#8b8b96;line-height:1.6}
 footer{margin-top:34px;color:#8b8b96;font-size:12.5px}
-a{color:#6e8bff;text-decoration:none}
+a{color:#a855f7;text-decoration:none}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 button{font:inherit;cursor:pointer;border:1px solid #26262e;background:#08080a;color:#ededf2;border-radius:9px;padding:8px 12px;font-size:12.5px;transition:.15s}
-button:hover{border-color:#6e8bff}
+button:hover{border-color:#a855f7}
 .out{min-height:64px;white-space:pre-wrap}
 @media (prefers-color-scheme: light){
   body{background:#fafafc;color:#12141b}
