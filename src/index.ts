@@ -193,7 +193,9 @@ function landingPage(): string {
   return `<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bridgekit: scoped MCP server</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236e8bff'/%3E%3Cpath d='M9 13h11l-3-3m6 9H12l3 3' stroke='%2308080a' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237c3aed'/%3E%3Cpath d='M9 13h11l-3-3m6 9H12l3 3' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>${LANDING_CSS}</style></head>
 <body><div class="glow"></div><main>
   <header>
@@ -238,7 +240,7 @@ function landingPage(): string {
 
 const LANDING_CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#08080a;color:#ededf2;font:15px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:#08080a;color:#ededf2;font:15px/1.65 'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 20% -8%,rgba(124,58,237,.20),transparent 60%),radial-gradient(ellipse 50% 40% at 95% 10%,rgba(168,85,247,.12),transparent 55%)}
 main{position:relative;max-width:980px;margin:0 auto;padding:32px 24px 60px;z-index:1}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px}
@@ -247,9 +249,9 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .status{display:inline-flex;align-items:center;gap:7px;border:1px solid #26262e;background:#111114;border-radius:999px;padding:5px 11px;font-size:11px;color:#8b8b96}
 .status i{width:7px;height:7px;border-radius:50%;background:#3fb950;box-shadow:0 0 8px #3fb950}
 .eyebrow{display:inline-block;border:1px solid #26262e;background:#111114;border-radius:999px;padding:4px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#8b8b96}
-h1{font-size:38px;line-height:1.1;letter-spacing:-.02em;margin:16px 0 14px;font-weight:650}
+h1{font-size:46px;line-height:1.06;letter-spacing:-.025em;margin:18px 0 16px;font-weight:700;background:linear-gradient(120deg,#fff,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{color:#8b8b96;max-width:560px;font-size:16px}
-.card{border:1px solid #26262e;background:#111114;border-radius:18px;padding:18px;margin-top:26px;box-shadow:0 8px 24px -12px rgba(0,0,0,.6)}
+.card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(24,20,34,.9),rgba(17,17,20,.5));backdrop-filter:blur(12px);border-radius:20px;padding:20px;margin-top:18px;box-shadow:0 1px 0 0 rgba(255,255,255,.04) inset,0 16px 50px -22px rgba(0,0,0,.7);transition:.2s}.card:hover{border-color:rgba(168,85,247,.35);transform:translateY(-2px)}
 .card-head{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#8b8b96;margin-bottom:12px}
 table{width:100%;border-collapse:collapse;font-size:13.5px}
 th{text-align:left;font-weight:500;color:#8b8b96;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:0 0 8px}
