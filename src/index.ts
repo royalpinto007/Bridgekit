@@ -257,6 +257,14 @@ function landingPage(): string {
     <div class="ticker"><div class="ticker-inner">${AUDIT_ROWS}${AUDIT_ROWS}</div></div>
   </div>
   <div class="card">
+    <div class="card-head">Which tool should I use? (AI)</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <input id="tgin" onkeydown="if(event.key==='Enter')tsuggest()" placeholder="Describe what you need, e.g. last week ad ROAS" style="flex:1;min-width:200px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px"/>
+      <button onclick="tsuggest()">Suggest</button>
+    </div>
+    <pre id="tgout" class="out"></pre>
+  </div>
+  <div class="card">
     <div class="card-head">Exposed tools</div>
     <table><thead><tr><th>tool</th><th>type</th><th>description</th></tr></thead><tbody>${rows}</tbody></table>
   </div>
@@ -275,14 +283,6 @@ function landingPage(): string {
       <button onclick="bk('tools/call',{name:'shopify_tag_order',arguments:{orderId:1001,tags:'vip'}})">Try a write</button>
     </div>
     <pre id="out" class="out">Click a button to call the live MCP server. The demo key is read-only, so the write attempt is denied and logged.</pre>
-  </div>
-  <div class="card">
-    <div class="card-head">Which tool should I use? (AI)</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <input id="tgin" onkeydown="if(event.key==='Enter')tsuggest()" placeholder="Describe what you need, e.g. last week ad ROAS" style="flex:1;min-width:200px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px"/>
-      <button onclick="tsuggest()">Suggest</button>
-    </div>
-    <pre id="tgout" class="out"></pre>
   </div>
   <footer>Per-key scopes · write actions gated · every call audited · <a href="/info">/info</a></footer>
   <script>
