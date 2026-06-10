@@ -206,6 +206,15 @@ function landingPage(): string {
   <h1>Give your AI your tools.<br>Not your API keys.</h1>
   <p class="lede">A scoped MCP server that exposes Shopify, Triple Whale, and your database to an AI stack with per-client permission boundaries, read/write separation, and an append-only audit log.</p>
   <div class="card">
+    <div class="card-head">How it works <span class="runtag"><i></i> running</span></div>
+    <div class="flow"><div class="ftrack"></div><div class="fnodes">
+      <div class="fnode"><div class="fico" style="animation-delay:0s">1</div><div class="ft">AI asks</div><div class="fd">Your agent calls a tool over MCP.</div></div>
+      <div class="fnode"><div class="fico" style="animation-delay:.7s">2</div><div class="ft">Scope check</div><div class="fd">Key matched to allowed tools and write scope.</div></div>
+      <div class="fnode"><div class="fico" style="animation-delay:1.4s">3</div><div class="ft">Tool runs</div><div class="fd">Shopify, Triple Whale or DB, one interface.</div></div>
+      <div class="fnode"><div class="fico" style="animation-delay:2.1s">4</div><div class="ft">Audited</div><div class="fd">Every call logged, allowed or denied.</div></div>
+    </div></div>
+  </div>
+  <div class="card">
     <div class="card-head">Exposed tools</div>
     <table><thead><tr><th>tool</th><th>type</th><th>description</th></tr></thead><tbody>${rows}</tbody></table>
   </div>
@@ -268,6 +277,23 @@ a{color:#a855f7;text-decoration:none}
 button{font:inherit;cursor:pointer;border:1px solid #26262e;background:#08080a;color:#ededf2;border-radius:9px;padding:8px 12px;font-size:12.5px;transition:.15s}
 button:hover{border-color:#a855f7}
 .out{min-height:64px;white-space:pre-wrap}
+.runtag{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#a855f7;background:rgba(168,85,247,.12);border-radius:999px;padding:2px 8px;margin-left:8px}
+.runtag i{width:6px;height:6px;border-radius:50%;background:#a855f7;animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+.flow{position:relative;margin-top:4px}
+.ftrack{position:absolute;left:7%;right:7%;top:21px;height:2px;background:#2e2836;border-radius:2px;overflow:hidden;display:none}
+@media(min-width:640px){.ftrack{display:block}}
+.ftrack::before{content:"";position:absolute;top:-1px;height:4px;width:22%;border-radius:4px;background:linear-gradient(90deg,transparent,#a855f7,transparent);animation:ftravel 2.8s linear infinite}
+@keyframes ftravel{0%{left:-22%}100%{left:100%}}
+.fnodes{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:640px){.fnodes{grid-template-columns:1fr}}
+.fnode{text-align:center}
+@media(min-width:640px){.fnode{text-align:left}}
+.fico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:700;margin:0 auto 10px;animation:fpulse 2.8s ease-in-out infinite}
+@media(min-width:640px){.fico{margin:0 0 10px}}
+@keyframes fpulse{0%,100%{box-shadow:0 0 0 0 rgba(168,85,247,0)}50%{box-shadow:0 0 0 6px rgba(168,85,247,.18)}}
+.ft{font-weight:600;font-size:13.5px}
+.fd{color:#8b8b96;font-size:12px;margin-top:3px;line-height:1.5}
 @media (prefers-color-scheme: light){
   body{background:#fafafc;color:#12141b}
   .status,.eyebrow,.card{background:#fff;border-color:#e2e4e9}
