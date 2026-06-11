@@ -270,31 +270,46 @@ function landingPage(): string {
     <div class="logo"><span class="mark">⇄</span> Bridgekit</div>
     <span class="status"><i></i> live</span>
   </header>
-  <span class="eyebrow">model context protocol</span>
-  <h1>Give your AI your tools.<br>Not your API keys.</h1>
-  <p class="lede">A scoped MCP server that exposes Shopify, Triple Whale, and your database to an AI stack with per-client permission boundaries, read/write separation, and an append-only audit log.</p>
-  <div class="card">
-    <div class="card-head">Live audit log <span class="runtag"><i></i> streaming</span></div>
-    <div class="ticker"><div class="ticker-inner">${AUDIT_ROWS}${AUDIT_ROWS}</div></div>
-  </div>
-  <div class="card">
-    <div class="card-head">Which tool should I use? (AI)</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <input id="tgin" onkeydown="if(event.key==='Enter')tsuggest()" placeholder="Describe what you need, e.g. last week ad ROAS" style="flex:1;min-width:200px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px"/>
-      <button onclick="tsuggest()">Suggest</button>
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">model context protocol</span>
+      <h1>Give AI your tools. Keep the keys out of reach.</h1>
+      <p class="lede">Bridgekit is a scoped MCP server for Shopify, Triple Whale, and database workflows with per-client permissions, read/write separation, and an append-only audit trail.</p>
+      <div class="actions">
+        <button onclick="bk('tools/list',{})">Try live demo</button>
+        <a class="ghost" href="/info">View server info</a>
+      </div>
     </div>
-    <pre id="tgout" class="out"></pre>
-  </div>
-  <div class="card">
-    <div class="card-head">Exposed tools</div>
-    <table><thead><tr><th>tool</th><th>type</th><th>description</th></tr></thead><tbody>${rows}</tbody></table>
-  </div>
-  <div class="card">
-    <div class="card-head">Connect over Streamable HTTP</div>
-    <pre>curl $URL/mcp \\
+    <div class="card hero-card">
+      <div class="card-head">Live audit log <span class="runtag"><i></i> streaming</span></div>
+      <div class="ticker"><div class="ticker-inner">${AUDIT_ROWS}${AUDIT_ROWS}</div></div>
+    </div>
+  </section>
+  <section class="proof-grid">
+    <div class="mini-card"><span>01</span><strong>Scoped keys</strong><p>Each client sees only the tools and accounts they are allowed to use.</p></div>
+    <div class="mini-card"><span>02</span><strong>Gated writes</strong><p>Read tools stay fast, while write tools are denied or approved by policy.</p></div>
+    <div class="mini-card"><span>03</span><strong>Audit-ready</strong><p>Every tool call records actor, client, tool, timestamp, and outcome.</p></div>
+  </section>
+  <section class="panel-grid">
+    <div class="card">
+      <div class="card-head">Which tool should I use? (AI)</div>
+      <div class="input-row">
+        <input id="tgin" onkeydown="if(event.key==='Enter')tsuggest()" placeholder="Describe what you need, e.g. last week ad ROAS"/>
+        <button onclick="tsuggest()">Suggest</button>
+      </div>
+      <pre id="tgout" class="out"></pre>
+    </div>
+    <div class="card">
+      <div class="card-head">Connect over Streamable HTTP</div>
+      <pre>curl $URL/mcp \\
   -H "x-bridgekit-key: &lt;client-key&gt;" \\
   -H "content-type: application/json" \\
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</pre>
+    </div>
+  </section>
+  <div class="card tools-card">
+    <div class="card-head">Exposed tools</div>
+    <div class="tools-wrap"><table><thead><tr><th>tool</th><th>type</th><th>description</th></tr></thead><tbody>${rows}</tbody></table></div>
   </div>
   <div class="card">
     <div class="card-head">Try it live (demo client key)</div>
@@ -331,19 +346,34 @@ function landingPage(): string {
 const LANDING_CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#08080a;color:#ededf2;font:15px/1.65 'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
-.glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 20% -8%,rgba(124,58,237,.20),transparent 60%),radial-gradient(ellipse 50% 40% at 95% 10%,rgba(168,85,247,.12),transparent 55%)}
-main{position:relative;max-width:980px;margin:0 auto;padding:32px 24px 60px;z-index:1}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:48px}
+.glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 18% -10%,rgba(79,70,229,.22),transparent 60%),radial-gradient(ellipse 50% 40% at 95% 8%,rgba(20,184,166,.14),transparent 55%),linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:auto,auto,48px 48px,48px 48px}
+main{position:relative;max-width:1120px;margin:0 auto;padding:32px 24px 60px;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:42px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px}
 .mark{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:800}
 .status{display:inline-flex;align-items:center;gap:7px;border:1px solid #26262e;background:#111114;border-radius:999px;padding:5px 11px;font-size:11px;color:#8b8b96}
 .status i{width:7px;height:7px;border-radius:50%;background:#3fb950;box-shadow:0 0 8px #3fb950}
 .eyebrow{display:inline-block;border:1px solid #26262e;background:#111114;border-radius:999px;padding:4px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#8b8b96}
-h1{font-size:46px;line-height:1.06;letter-spacing:-.025em;margin:18px 0 16px;font-weight:700;background:linear-gradient(120deg,#fff,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lede{color:#8b8b96;max-width:560px;font-size:16px}
-.card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(24,20,34,.9),rgba(17,17,20,.5));backdrop-filter:blur(12px);border-radius:20px;padding:20px;margin-top:18px;box-shadow:0 1px 0 0 rgba(255,255,255,.04) inset,0 16px 50px -22px rgba(0,0,0,.7);transition:.2s}.card:hover{border-color:rgba(168,85,247,.35);transform:translateY(-2px)}
+h1{font-size:54px;line-height:1.02;letter-spacing:-.035em;margin:18px 0 16px;font-weight:800;max-width:680px;background:linear-gradient(120deg,#fff,#c7d2fe 52%,#5eead4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:#9aa0ad;max-width:610px;font-size:16.5px}
+.hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);gap:22px;align-items:stretch}
+.hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:360px;padding:10px 0}
+.actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:24px}
+.ghost{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);border-radius:10px;padding:8px 13px;color:#ededf2;font-size:12.5px;font-weight:600}
+.card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,20,30,.88),rgba(12,13,18,.62));backdrop-filter:blur(14px);border-radius:20px;padding:20px;margin-top:18px;box-shadow:0 1px 0 0 rgba(255,255,255,.04) inset,0 16px 50px -22px rgba(0,0,0,.7);transition:.2s}.card:hover{border-color:rgba(94,234,212,.35);transform:translateY(-2px)}
+.hero .card,.panel-grid .card{margin-top:0}
+.hero-card{min-height:360px}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.mini-card{border:1px solid rgba(255,255,255,.075);background:rgba(255,255,255,.035);border-radius:16px;padding:16px}
+.mini-card span{display:inline-flex;margin-bottom:10px;color:#5eead4;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.mini-card strong{display:block;font-size:14px;margin-bottom:5px}
+.mini-card p{color:#9aa0ad;font-size:12.5px;line-height:1.5}
+.panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.input-row{display:flex;gap:8px;flex-wrap:wrap}
+.input-row input{flex:1;min-width:220px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px}
 .card-head{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#8b8b96;margin-bottom:12px}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
+table{width:100%;min-width:640px;border-collapse:collapse;font-size:13.5px}
+.tools-wrap{overflow-x:auto}
 th{text-align:left;font-weight:500;color:#8b8b96;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:0 0 8px}
 td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
 .mono{font-family:ui-monospace,Menlo,monospace;color:#ededf2}
@@ -353,13 +383,13 @@ td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
 .badge.write{background:rgba(227,160,8,.14);color:#e3a008}
 pre{background:#08080a;border-radius:12px;padding:14px;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#8b8b96;line-height:1.6}
 footer{margin-top:34px;color:#8b8b96;font-size:12.5px}
-a{color:#a855f7;text-decoration:none}
+a{color:#5eead4;text-decoration:none}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-button{font:inherit;cursor:pointer;border:1px solid #26262e;background:#08080a;color:#ededf2;border-radius:9px;padding:8px 12px;font-size:12.5px;transition:.15s}
-button:hover{border-color:#a855f7}
+button{font:inherit;cursor:pointer;border:1px solid rgba(94,234,212,.28);background:linear-gradient(135deg,#4f46e5,#14b8a6);color:#fff;border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s}
+button:hover{border-color:#5eead4;filter:brightness(1.08)}
 .out{min-height:64px;white-space:pre-wrap}
-.runtag{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#a855f7;background:rgba(168,85,247,.12);border-radius:999px;padding:2px 8px;margin-left:8px}
-.runtag i{width:6px;height:6px;border-radius:50%;background:#a855f7;animation:blink 1.4s ease-in-out infinite}
+.runtag{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#5eead4;background:rgba(94,234,212,.12);border-radius:999px;padding:2px 8px;margin-left:8px}
+.runtag i{width:6px;height:6px;border-radius:50%;background:#5eead4;animation:blink 1.4s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
 .flow{position:relative;margin-top:4px}
 .ftrack{position:absolute;left:7%;right:7%;top:21px;height:2px;background:#2e2836;border-radius:2px;overflow:hidden;display:none}
@@ -383,17 +413,37 @@ button:hover{border-color:#a855f7}
 .tcli{color:#8b8b96;font-size:11px}
 .tok{color:#3fb950;background:rgba(63,185,80,.12);border-radius:6px;padding:2px 8px;font-size:11px}
 .tno{color:#f85149;background:rgba(248,81,73,.12);border-radius:6px;padding:2px 8px;font-size:11px}
-.chatbtn{position:fixed;bottom:20px;right:20px;width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:20px;box-shadow:0 10px 30px -8px rgba(124,58,237,.6);z-index:50}
-.chatbox{position:fixed;bottom:82px;right:20px;width:min(92vw,360px);height:440px;display:none;flex-direction:column;background:#141019;border:1px solid rgba(255,255,255,.1);border-radius:18px;overflow:hidden;z-index:50;box-shadow:0 20px 60px -20px rgba(0,0,0,.8)}
+.chatbtn{position:fixed;bottom:20px;right:20px;width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#4f46e5,#14b8a6);color:#fff;font-size:20px;box-shadow:0 10px 30px -8px rgba(20,184,166,.55);z-index:50}
+.chatbox{position:fixed;bottom:82px;right:20px;width:min(92vw,360px);height:440px;display:none;flex-direction:column;background:#0d1218;border:1px solid rgba(255,255,255,.1);border-radius:18px;overflow:hidden;z-index:50;box-shadow:0 20px 60px -20px rgba(0,0,0,.8)}
 .chatbox.open{display:flex}
 .chathead{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;font-weight:600}
 .chatmsgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
 .cm{max-width:82%;padding:8px 11px;border-radius:14px;font-size:13px;line-height:1.5}
-.cm.u{align-self:flex-end;background:rgba(168,85,247,.18)}
+.cm.u{align-self:flex-end;background:rgba(20,184,166,.18)}
 .cm.a{align-self:flex-start;background:rgba(255,255,255,.05)}
 .chatform{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(255,255,255,.08)}
 .chatform input{flex:1;min-width:0;background:#0c0e12;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:8px 10px;color:#ededf2;font:inherit;font-size:13px}
-.chatform button{border:none;border-radius:9px;padding:0 13px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:600;cursor:pointer}
+.chatform button{border:none;border-radius:9px;padding:0 13px;background:linear-gradient(135deg,#4f46e5,#14b8a6);color:#fff;font-weight:600;cursor:pointer}
+@media(max-width:860px){
+  main{padding:26px 16px 54px}
+  header{margin-bottom:30px}
+  .hero{grid-template-columns:1fr;gap:14px}
+  .hero-copy,.hero-card{min-height:auto}
+  h1{font-size:42px;max-width:none}
+  .lede{font-size:15.5px}
+  .proof-grid,.panel-grid{grid-template-columns:1fr}
+  .card,.mini-card{padding:16px;border-radius:16px}
+  .input-row input{min-width:0;width:100%}
+}
+@media(max-width:520px){
+  header{align-items:flex-start;gap:12px;flex-direction:column}
+  h1{font-size:34px}
+  .actions,.actions button,.ghost{width:100%}
+  .ghost{text-align:center}
+  .ticker{height:150px}
+  .chatbtn{right:14px;bottom:14px}
+  .chatbox{right:12px;bottom:74px;width:calc(100vw - 24px);height:min(440px,70vh)}
+}
 @media (prefers-color-scheme: light){
   body{background:#fafafc;color:#12141b}
   .status,.eyebrow,.card{background:#fff;border-color:#e2e4e9}
