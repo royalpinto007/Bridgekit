@@ -338,10 +338,10 @@ function landingPage(): string {
   <section class="suite-block">
     <div class="suite-copy"><span class="card-head">Agent operating suite</span><h2>Bridgekit is the tool layer.</h2><p>It gives agents safe MCP access. The rest of the suite covers support work, browser automation, evaluation, human approval, and failure lessons.</p></div>
     <div class="suite-links">
-      <a class="suite-link" href="https://greenlite.aashinyraa.workers.dev"><img src="https://greenlite.aashinyraa.workers.dev/favicon.svg" alt=""><strong>Greenlite</strong><span>Human approvals</span></a>
-      <a class="suite-link" href="https://resolvd.aashinyraa.workers.dev"><img src="https://resolvd.aashinyraa.workers.dev/icon.svg" alt=""><strong>Resolvd</strong><span>Support inbox</span></a>
-      <a class="suite-link" href="https://tracecase.aashinyraa.workers.dev"><img src="https://tracecase.aashinyraa.workers.dev/icon.svg" alt=""><strong>Tracecase</strong><span>Agent CI</span></a>
-      <a class="suite-link" href="https://webhands.aashinyraa.workers.dev"><img src="https://webhands.aashinyraa.workers.dev/icon.svg" alt=""><strong>Webhands</strong><span>Browser agents</span></a>
+      <a class="suite-link" href="https://greenlite.agentpostmortem.com"><img src="https://greenlite.agentpostmortem.com/favicon.svg" alt=""><strong>Greenlite</strong><span>Human approvals</span></a>
+      <a class="suite-link" href="https://resolvd.agentpostmortem.com"><img src="https://resolvd.agentpostmortem.com/icon.svg" alt=""><strong>Resolvd</strong><span>Support inbox</span></a>
+      <a class="suite-link" href="https://tracecase.agentpostmortem.com"><img src="https://tracecase.agentpostmortem.com/icon.svg" alt=""><strong>Tracecase</strong><span>Agent CI</span></a>
+      <a class="suite-link" href="https://webhands.agentpostmortem.com"><img src="https://webhands.agentpostmortem.com/icon.svg" alt=""><strong>Webhands</strong><span>Browser agents</span></a>
       <a class="suite-link" href="https://agentpostmortem.com"><img src="https://agentpostmortem.com/icon" alt=""><strong>AgentPostmortem</strong><span>Failure lessons</span></a>
     </div>
   </section>
