@@ -336,13 +336,13 @@ function landingPage(): string {
     <pre id="out" class="out">Click a button to call the live MCP server. The demo key is read-only, so the write attempt is denied and logged.</pre>
   </div>
   <section class="suite-block">
-    <div><span class="card-head">Agent suite</span><h2>Connect the rest of the operating layer.</h2></div>
+    <div class="suite-copy"><span class="card-head">Agent operating suite</span><h2>Bridgekit is the tool layer.</h2><p>It gives agents safe MCP access. The rest of the suite covers support work, browser automation, evaluation, human approval, and failure lessons.</p></div>
     <div class="suite-links">
-      <a class="suite-link" href="https://greenlite.aashinyraa.workers.dev"><img src="https://greenlite.aashinyraa.workers.dev/favicon.svg" alt="">Greenlite</a>
-      <a class="suite-link" href="https://resolvd.aashinyraa.workers.dev"><img src="https://resolvd.aashinyraa.workers.dev/icon.svg" alt="">Resolvd</a>
-      <a class="suite-link" href="https://tracecase.aashinyraa.workers.dev"><img src="https://tracecase.aashinyraa.workers.dev/icon.svg" alt="">Tracecase</a>
-      <a class="suite-link" href="https://webhands.aashinyraa.workers.dev"><img src="https://webhands.aashinyraa.workers.dev/icon.svg" alt="">Webhands</a>
-      <a class="suite-link" href="https://agentpostmortem.com"><img src="https://agentpostmortem.com/icon" alt="">AgentPostmortem</a>
+      <a class="suite-link" href="https://greenlite.aashinyraa.workers.dev"><img src="https://greenlite.aashinyraa.workers.dev/favicon.svg" alt=""><strong>Greenlite</strong><span>Human approvals</span></a>
+      <a class="suite-link" href="https://resolvd.aashinyraa.workers.dev"><img src="https://resolvd.aashinyraa.workers.dev/icon.svg" alt=""><strong>Resolvd</strong><span>Support inbox</span></a>
+      <a class="suite-link" href="https://tracecase.aashinyraa.workers.dev"><img src="https://tracecase.aashinyraa.workers.dev/icon.svg" alt=""><strong>Tracecase</strong><span>Agent CI</span></a>
+      <a class="suite-link" href="https://webhands.aashinyraa.workers.dev"><img src="https://webhands.aashinyraa.workers.dev/icon.svg" alt=""><strong>Webhands</strong><span>Browser agents</span></a>
+      <a class="suite-link" href="https://agentpostmortem.com"><img src="https://agentpostmortem.com/icon" alt=""><strong>AgentPostmortem</strong><span>Failure lessons</span></a>
     </div>
   </section>
   <footer>Scoped keys · gated writes · audited · <a href="/info">/info</a></footer>
@@ -413,12 +413,16 @@ a{color:#5eead4;text-decoration:none}
 button{font:inherit;cursor:pointer;border:1px solid rgba(94,234,212,.28);background:linear-gradient(135deg,#4f46e5,#14b8a6);color:#fff;border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s}
 button:hover{border-color:#5eead4;filter:brightness(1.08)}
 .out{min-height:64px;white-space:pre-wrap}
-.suite-block{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:24px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px}
+.suite-block{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:stretch;gap:16px;margin-top:24px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px}
+.suite-copy{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);border-radius:16px;padding:16px}
 .suite-block h2{font-size:17px;line-height:1.35}
-.suite-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
-.suite-link{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:10px;padding:7px 9px;color:#9aa0ad;font-size:11px;font-weight:600;transition:.15s}
+.suite-copy p{color:#9aa0ad;font-size:12.5px;line-height:1.55;margin-top:8px}
+.suite-links{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.suite-link{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:6px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:12px;padding:10px;color:#9aa0ad;font-size:11px;font-weight:600;transition:.15s}
 .suite-link:hover{border-color:rgba(94,234,212,.4);color:#ededf2}
 .suite-link img{width:20px;height:20px;border-radius:6px;object-fit:cover}
+.suite-link strong{font-size:12px;color:#ededf2}
+.suite-link span{font-size:10.5px;line-height:1.3;color:#8b8b96}
 .runtag{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#5eead4;background:rgba(94,234,212,.12);border-radius:999px;padding:2px 8px;margin-left:8px}
 .runtag i{width:6px;height:6px;border-radius:50%;background:#5eead4;animation:blink 1.4s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
@@ -463,8 +467,8 @@ button:hover{border-color:#5eead4;filter:brightness(1.08)}
   h1{font-size:42px;max-width:none}
   .lede{font-size:15.5px}
   .proof-grid,.panel-grid{grid-template-columns:1fr}
-  .suite-block{align-items:flex-start;flex-direction:column}
-  .suite-links{justify-content:flex-start}
+  .suite-block{grid-template-columns:1fr}
+  .suite-links{grid-template-columns:repeat(2,minmax(0,1fr))}
   .card,.mini-card{padding:16px;border-radius:16px}
   .input-row input{min-width:0;width:100%}
 }
