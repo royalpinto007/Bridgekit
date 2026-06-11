@@ -3,7 +3,7 @@
   "name": "bridgekit",
   "account_id": "a97af859ae0c177338e4df0b1d640176",
   "main": "src/index.ts",
-  "compatibility_date": "2025-03-25",
+  "compatibility_date": "2026-06-11",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "observability": {
