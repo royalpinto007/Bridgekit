@@ -18,13 +18,13 @@ export default {
     const url = new URL(req.url);
 
     // Human-facing landing (HTML); machine info at /info.
-    if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
+    if ((req.method === "GET" || req.method === "HEAD") && (url.pathname === "/" || url.pathname === "")) {
       return html(landingPage());
     }
     if ((req.method === "GET" || req.method === "HEAD") && url.pathname === "/icon.svg") {
       return svg(BRIDGEKIT_ICON);
     }
-    if (req.method === "GET" && url.pathname === "/info") {
+    if ((req.method === "GET" || req.method === "HEAD") && url.pathname === "/info") {
       return json({
         server: SERVER_INFO,
         protocol: PROTOCOL_VERSION,
