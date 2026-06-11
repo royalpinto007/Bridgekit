@@ -21,7 +21,7 @@ export default {
     if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
       return html(landingPage());
     }
-    if (req.method === "GET" && url.pathname === "/icon.svg") {
+    if ((req.method === "GET" || req.method === "HEAD") && url.pathname === "/icon.svg") {
       return svg(BRIDGEKIT_ICON);
     }
     if (req.method === "GET" && url.pathname === "/info") {
@@ -338,11 +338,11 @@ function landingPage(): string {
   <section class="suite-block">
     <div class="suite-copy"><span class="card-head">Agent operating suite</span><h2>Bridgekit is the tool layer.</h2><p>It gives agents safe MCP access. The rest of the suite covers support work, browser automation, evaluation, human approval, and failure lessons.</p></div>
     <div class="suite-links">
-      <a class="suite-link" href="https://greenlite.agentpostmortem.com"><img src="https://greenlite.agentpostmortem.com/favicon.svg" alt=""><strong>Greenlite</strong><span>Human approvals</span></a>
-      <a class="suite-link" href="https://resolvd.agentpostmortem.com"><img src="https://resolvd.agentpostmortem.com/icon.svg" alt=""><strong>Resolvd</strong><span>Support inbox</span></a>
-      <a class="suite-link" href="https://tracecase.agentpostmortem.com"><img src="https://tracecase.agentpostmortem.com/icon.svg" alt=""><strong>Tracecase</strong><span>Agent CI</span></a>
-      <a class="suite-link" href="https://webhands.agentpostmortem.com"><img src="https://webhands.agentpostmortem.com/icon.svg" alt=""><strong>Webhands</strong><span>Browser agents</span></a>
-      <a class="suite-link" href="https://agentpostmortem.com"><img src="https://agentpostmortem.com/icon" alt=""><strong>AgentPostmortem</strong><span>Failure lessons</span></a>
+      <a class="suite-link" href="https://greenlite.agentpostmortem.com"><span class="suite-mark gm">G</span><span><strong>Greenlite</strong><em>Human approvals</em></span></a>
+      <a class="suite-link" href="https://resolvd.agentpostmortem.com"><span class="suite-mark rm">R</span><span><strong>Resolvd</strong><em>Support inbox</em></span></a>
+      <a class="suite-link" href="https://tracecase.agentpostmortem.com"><span class="suite-mark tm">T</span><span><strong>Tracecase</strong><em>Agent CI</em></span></a>
+      <a class="suite-link" href="https://webhands.agentpostmortem.com"><span class="suite-mark wm">W</span><span><strong>Webhands</strong><em>Browser agents</em></span></a>
+      <a class="suite-link" href="https://agentpostmortem.com"><span class="suite-mark am">A</span><span><strong>AgentPostmortem</strong><em>Failure lessons</em></span></a>
     </div>
   </section>
   <footer>Scoped keys · gated writes · audited · <a href="/info">/info</a></footer>
@@ -385,7 +385,7 @@ h1{font-size:54px;line-height:1.02;letter-spacing:-.035em;margin:18px 0 16px;fon
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:360px;padding:10px 0}
 .actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:24px}
 .ghost{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);border-radius:10px;padding:8px 13px;color:#ededf2;font-size:12.5px;font-weight:600}
-.card{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,20,30,.88),rgba(12,13,18,.62));backdrop-filter:blur(14px);border-radius:20px;padding:20px;margin-top:18px;box-shadow:0 1px 0 0 rgba(255,255,255,.04) inset,0 16px 50px -22px rgba(0,0,0,.7);transition:.2s}.card:hover{border-color:rgba(94,234,212,.35);transform:translateY(-2px)}
+.card{min-width:0;max-width:100%;box-sizing:border-box;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(15,20,30,.88),rgba(12,13,18,.62));backdrop-filter:blur(14px);border-radius:20px;padding:20px;margin-top:18px;box-shadow:0 1px 0 0 rgba(255,255,255,.04) inset,0 16px 50px -22px rgba(0,0,0,.7);transition:.2s}.card:hover{border-color:rgba(94,234,212,.35);transform:translateY(-2px)}
 .hero .card,.panel-grid .card{margin-top:0}
 .hero-card{min-height:360px}
 .proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
@@ -394,11 +394,12 @@ h1{font-size:54px;line-height:1.02;letter-spacing:-.035em;margin:18px 0 16px;fon
 .mini-card strong{display:block;font-size:14px;margin-bottom:5px}
 .mini-card p{color:#9aa0ad;font-size:12.5px;line-height:1.5}
 .panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.input-row{display:flex;gap:8px;flex-wrap:wrap}
+.input-row{display:flex;min-width:0;gap:8px;flex-wrap:wrap}
 .input-row input{flex:1;min-width:220px;background:#08080a;border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:9px 11px;color:#ededf2;font:inherit;font-size:13px}
 .card-head{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#8b8b96;margin-bottom:12px}
 table{width:100%;min-width:640px;border-collapse:collapse;font-size:13.5px}
-.tools-wrap{overflow-x:auto}
+.tools-card{overflow:hidden}
+.tools-wrap{max-width:100%;overflow-x:auto}
 th{text-align:left;font-weight:500;color:#8b8b96;font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:0 0 8px}
 td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
 .mono{font-family:ui-monospace,Menlo,monospace;color:#ededf2}
@@ -406,23 +407,28 @@ td{padding:9px 12px 9px 0;border-top:1px solid #1d1d23;vertical-align:top}
 .badge{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
 .badge.read{background:rgba(54,214,195,.14);color:#36d6c3}
 .badge.write{background:rgba(227,160,8,.14);color:#e3a008}
-pre{background:#08080a;border-radius:12px;padding:14px;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#8b8b96;line-height:1.6}
+pre{max-width:100%;background:#08080a;border-radius:12px;padding:14px;overflow-x:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;color:#8b8b96;line-height:1.6}
 footer{margin-top:34px;color:#8b8b96;font-size:12.5px}
 a{color:#5eead4;text-decoration:none}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 button{font:inherit;cursor:pointer;border:1px solid rgba(94,234,212,.28);background:linear-gradient(135deg,#4f46e5,#14b8a6);color:#fff;border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s}
 button:hover{border-color:#5eead4;filter:brightness(1.08)}
 .out{min-height:64px;white-space:pre-wrap}
-.suite-block{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:stretch;gap:16px;margin-top:24px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px}
-.suite-copy{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);border-radius:16px;padding:16px}
-.suite-block h2{font-size:17px;line-height:1.35}
-.suite-copy p{color:#9aa0ad;font-size:12.5px;line-height:1.55;margin-top:8px}
-.suite-links{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
-.suite-link{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:6px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:12px;padding:10px;color:#9aa0ad;font-size:11px;font-weight:600;transition:.15s}
-.suite-link:hover{border-color:rgba(94,234,212,.4);color:#ededf2}
-.suite-link img{width:20px;height:20px;border-radius:6px;object-fit:cover}
-.suite-link strong{font-size:12px;color:#ededf2}
-.suite-link span{font-size:10.5px;line-height:1.3;color:#8b8b96}
+.suite-block{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);align-items:stretch;gap:16px;margin-top:28px;border-top:1px solid rgba(255,255,255,.08);padding-top:24px}
+.suite-copy{border:1px solid rgba(94,234,212,.14);background:linear-gradient(180deg,rgba(94,234,212,.07),rgba(255,255,255,.025));border-radius:18px;padding:18px}
+.suite-block h2{font-size:18px;line-height:1.35}
+.suite-copy p{color:#9aa0ad;font-size:12.5px;line-height:1.6;margin-top:8px}
+.suite-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.suite-link{display:flex;min-width:0;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:14px;padding:11px;color:#9aa0ad;font-size:11px;font-weight:600;transition:.15s}
+.suite-link:hover{transform:translateY(-1px);border-color:rgba(94,234,212,.4);background:rgba(94,234,212,.055);color:#ededf2}
+.suite-mark{display:grid;place-items:center;flex:0 0 auto;width:32px;height:32px;border-radius:10px;color:#fff;font-size:12px;font-weight:800;box-shadow:0 12px 24px -16px currentColor}
+.suite-mark.gm{background:linear-gradient(135deg,#a855f7,#d946ef)}
+.suite-mark.rm{background:linear-gradient(135deg,#38bdf8,#22d3ee)}
+.suite-mark.tm{background:linear-gradient(135deg,#10b981,#14b8a6)}
+.suite-mark.wm{background:linear-gradient(135deg,#06b6d4,#60a5fa)}
+.suite-mark.am{background:linear-gradient(135deg,#ef4444,#f43f5e)}
+.suite-link strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#ededf2}
+.suite-link em{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:normal;font-size:10.5px;line-height:1.35;color:#8b8b96}
 .runtag{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#5eead4;background:rgba(94,234,212,.12);border-radius:999px;padding:2px 8px;margin-left:8px}
 .runtag i{width:6px;height:6px;border-radius:50%;background:#5eead4;animation:blink 1.4s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
@@ -478,8 +484,13 @@ button:hover{border-color:#5eead4;filter:brightness(1.08)}
   .actions,.actions button,.ghost{width:100%}
   .ghost{text-align:center}
   .ticker{height:150px}
+  .input-row{display:grid}
+  .input-row input{min-width:0;width:100%;box-sizing:border-box}
+  .input-row button{width:100%}
   .chatbtn{right:14px;bottom:14px}
   .chatbox{right:12px;bottom:74px;width:calc(100vw - 24px);height:min(440px,70vh)}
+  .suite-links{grid-template-columns:1fr}
+  table{min-width:520px}
 }
 @media (prefers-color-scheme: light){
   body{background:#fafafc;color:#12141b}
