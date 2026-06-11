@@ -21,6 +21,9 @@ export default {
     if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
       return html(landingPage());
     }
+    if (req.method === "GET" && url.pathname === "/icon.svg") {
+      return svg(BRIDGEKIT_ICON);
+    }
     if (req.method === "GET" && url.pathname === "/info") {
       return json({
         server: SERVER_INFO,
@@ -234,6 +237,18 @@ function html(body: string, status = 200): Response {
   });
 }
 
+function svg(body: string): Response {
+  return new Response(body, {
+    headers: {
+      "content-type": "image/svg+xml",
+      "cache-control": "public, max-age=86400",
+    },
+  });
+}
+
+const BRIDGEKIT_ICON =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#4f46e5"/><path d="M8 12h12l-3.5-3.5M24 20H12l3.5 3.5" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
 const AUDIT_ROWS = [
   ["growth-os", "triplewhale_metrics", true],
   ["growth-os", "shopify_orders", true],
@@ -320,6 +335,16 @@ function landingPage(): string {
     </div>
     <pre id="out" class="out">Click a button to call the live MCP server. The demo key is read-only, so the write attempt is denied and logged.</pre>
   </div>
+  <section class="suite-block">
+    <div><span class="card-head">Agent suite</span><h2>Connect the rest of the operating layer.</h2></div>
+    <div class="suite-links">
+      <a class="suite-link" href="https://greenlite.aashinyraa.workers.dev"><img src="https://greenlite.aashinyraa.workers.dev/favicon.svg" alt="">Greenlite</a>
+      <a class="suite-link" href="https://resolvd.aashinyraa.workers.dev"><img src="https://resolvd.aashinyraa.workers.dev/icon.svg" alt="">Resolvd</a>
+      <a class="suite-link" href="https://tracecase.aashinyraa.workers.dev"><img src="https://tracecase.aashinyraa.workers.dev/icon.svg" alt="">Tracecase</a>
+      <a class="suite-link" href="https://webhands.aashinyraa.workers.dev"><img src="https://webhands.aashinyraa.workers.dev/icon.svg" alt="">Webhands</a>
+      <a class="suite-link" href="https://agentpostmortem.com"><img src="https://agentpostmortem.com/icon" alt="">AgentPostmortem</a>
+    </div>
+  </section>
   <footer>Scoped keys · gated writes · audited · <a href="/info">/info</a></footer>
   <script>
     async function tsuggest(){var i=document.getElementById('tgin'),o=document.getElementById('tgout');var q=i.value.trim()||"last week's blended ROAS";o.textContent='Thinking…';try{var r=await fetch('/ai',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({prompt:'Bridgekit exposes these MCP tools: shopify_orders (read), triplewhale_metrics (read), db_query (read, allowlisted tables), shopify_tag_order (write). Which ONE best fits this request, and give a one-line example call? Request: '+q,max:160})});var d=await r.json();o.textContent=d.reply||('Unavailable ('+(d.error||'?')+')');}catch(e){o.textContent='Error: '+e.message;}}
@@ -388,6 +413,12 @@ a{color:#5eead4;text-decoration:none}
 button{font:inherit;cursor:pointer;border:1px solid rgba(94,234,212,.28);background:linear-gradient(135deg,#4f46e5,#14b8a6);color:#fff;border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:700;transition:.15s}
 button:hover{border-color:#5eead4;filter:brightness(1.08)}
 .out{min-height:64px;white-space:pre-wrap}
+.suite-block{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:24px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px}
+.suite-block h2{font-size:17px;line-height:1.35}
+.suite-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+.suite-link{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);border-radius:10px;padding:7px 9px;color:#9aa0ad;font-size:11px;font-weight:600;transition:.15s}
+.suite-link:hover{border-color:rgba(94,234,212,.4);color:#ededf2}
+.suite-link img{width:20px;height:20px;border-radius:6px;object-fit:cover}
 .runtag{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:#5eead4;background:rgba(94,234,212,.12);border-radius:999px;padding:2px 8px;margin-left:8px}
 .runtag i{width:6px;height:6px;border-radius:50%;background:#5eead4;animation:blink 1.4s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
@@ -432,6 +463,8 @@ button:hover{border-color:#5eead4;filter:brightness(1.08)}
   h1{font-size:42px;max-width:none}
   .lede{font-size:15.5px}
   .proof-grid,.panel-grid{grid-template-columns:1fr}
+  .suite-block{align-items:flex-start;flex-direction:column}
+  .suite-links{justify-content:flex-start}
   .card,.mini-card{padding:16px;border-radius:16px}
   .input-row input{min-width:0;width:100%}
 }
