@@ -372,7 +372,7 @@ const LANDING_CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#08080a;color:#ededf2;font:15px/1.65 'Inter',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
 .glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 18% -10%,rgba(79,70,229,.22),transparent 60%),radial-gradient(ellipse 50% 40% at 95% 8%,rgba(20,184,166,.14),transparent 55%),linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:auto,auto,48px 48px,48px 48px}
-main{position:relative;max-width:1120px;margin:0 auto;padding:32px 24px 60px;z-index:1}
+main{position:relative;max-width:1320px;margin:0 auto;padding:32px 28px 60px;z-index:1}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:42px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px}
 .mark{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-weight:800}
